@@ -7,6 +7,13 @@
 
 #include "Map.h"
 
+class Head {
+public:
+    int id;
+    int x;
+    int y;
+};
+
 class Snake {
 public:
 
@@ -22,6 +29,8 @@ private:
     Map map;
     int id;
     int nb_players;
+    std::vector<Head>  heads;
+
 };
 
 #endif //TEST_AI_H

@@ -21,6 +21,15 @@ void Map::createMap() {
 
 void    Map::removeDeadPlayers(int id) {
     for (int y = 0; y < MAPY; y++) {
-        for (int x)
+        for (int x = 0; x < MAPX; x++) {
+            if (map[y][x].used && id == map[y][x].id) {
+                map[y][x].used = false;
+            }
+        }
     }
+}
+
+void    Map::addMove(int id, int x, int y) {
+    map[y][x].used = true;
+    map[y][x].id = id;
 }

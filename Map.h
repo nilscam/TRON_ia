@@ -18,6 +18,7 @@ public:
 
     void    createMap();
     void    removeDeadPlayers(int);
+    void    addMove(int, int, int);
 
     std::vector<std::vector<Cell>>  map;
 
