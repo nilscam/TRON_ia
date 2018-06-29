@@ -7,10 +7,16 @@
 
 #include <vector>
 #include "Cell.h"
-#include "Snake.h"
 
 #define MAPY 20
 #define MAPX 30
+
+class Head {
+public:
+    int id;
+    int x;
+    int y;
+};
 
 class Map {
 public:
@@ -23,7 +29,7 @@ public:
     void    addMove(int, int, int);
 
     void    propagation(std::vector<Head>);
-    int     getScore(int id);
+    int     getScore(int);
 
     std::vector<std::vector<Cell>>  map;
     int scores[4] = {0, 0, 0, 0};

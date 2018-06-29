@@ -9,13 +9,6 @@
 #include <string>
 #include "Map.h"
 
-class Head {
-public:
-    int id;
-    int x;
-    int y;
-};
-
 class Snake {
 public:
 
