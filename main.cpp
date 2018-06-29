@@ -27,6 +27,5 @@ int main()
         // Write an action using cout. DON'T FORGET THE "<< endl"
         // To debug: cerr << "Debug messages..." << endl"
         snake.takeDecision();
-        cout << "LEFT" << endl; // A single line with UP, DOWN, LEFT or RIGHT
     }
 }

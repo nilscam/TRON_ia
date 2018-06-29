@@ -13,7 +13,6 @@ public:
 
     int id;
     bool used = false;
-    int fill_id;
 };
 
 #endif //TEST_CELL_H

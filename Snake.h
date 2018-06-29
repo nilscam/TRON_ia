@@ -5,6 +5,8 @@
 #ifndef TEST_AI_H
 #define TEST_AI_H
 
+#include <iostream>
+#include <string>
 #include "Map.h"
 
 class Head {
@@ -22,7 +24,10 @@ public:
 
 
     void    addHead(int, int, int, int, int);
+    std::vector<Head>   headSort(std::vector<Head> const &, int, int, int);
+
     void    takeDecision();
+
 
 private:
 

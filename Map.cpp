@@ -35,9 +35,10 @@ void    Map::addMove(int id, int x, int y) {
 }
 
 #define TRY_PROP(x, y) ({ if ((x) >= 0 && (y) >= 0 && x < MAPX && y < MAPY && !map[y][x].used) {    \
-            map[y][x].used = true; \
+            map[y][x].used = true;  \
             map[y][x].id = head.id; \
             nextHeads.push_back({head.id, x, y});   \
+            scores[head.id] += 1;   \
         }})
 
 void    Map::propagation(std::vector<Head> heads) {
@@ -54,8 +55,12 @@ void    Map::propagation(std::vector<Head> heads) {
             TRY_PROP(head.x, head.y - 1); // UP
             TRY_PROP(head.x, head.y + 1); // DOWN
         }
+
         if (nextHeads.empty())
             mapIsFilled = true;
     }
 }
 
+int     Map::getScore(int id) {
+    return scores[id];
+}

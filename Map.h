@@ -23,9 +23,10 @@ public:
     void    addMove(int, int, int);
 
     void    propagation(std::vector<Head>);
+    int     getScore(int id);
 
     std::vector<std::vector<Cell>>  map;
-
+    int scores[4] = {0, 0, 0, 0};
 };
 
 #endif //TEST_MAP_H
