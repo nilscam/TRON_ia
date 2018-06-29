@@ -21,6 +21,7 @@ std::vector<Head> Snake::headSort(std::vector<Head> const &oldheads, int idFirst
     unsigned long   size = oldheads.size();
     std::vector<Head>   newheads(size);
 
+    std::cerr << size << std::endl;
     newheads.push_back({oldheads[idFirst].id, x, y});
     for (int i = 1; i < size; i++) {
         // on met les têtes dans l'ordre de celle qui joue la première jusqu"à la dernière
@@ -43,20 +44,27 @@ void    Snake::takeDecision() {
     std::string bestDir = "UP";
 
     for (auto dir : directions) {
-        Map test(map);
+            std::cerr << "loop" << std::endl;
+            Map test = map;
 
-        int x = heads[id].x + dir.second.first;
-        int y = heads[id].y + dir.second.second;
+            int x = heads[id].x + dir.second.first;
+            int y = heads[id].y + dir.second.second;
 
-        std::vector<Head>   h = headSort(heads, id, x, y);
-        test.addMove(id, x, y);
+            std::vector<Head>   h = headSort(heads, id, x, y);
 
-        test.propagation(h);
 
-        if (test.getScore(id) > maxScore) {
-            maxScore = test.getScore(id);
-            bestDir = dir.first;
-        }
+            /*
+            test.addMove(id, x, y);
+
+
+            test.propagation(h);
+
+            if (test.getScore(id) > maxScore) {
+                maxScore = test.getScore(id);
+                bestDir = dir.first;
+            }
+            */
     }
     std::cout << bestDir << std::endl;
+    heads.clear();
 }

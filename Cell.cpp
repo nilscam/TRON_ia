@@ -7,3 +7,5 @@
 Cell::Cell() = default;
 
 Cell::~Cell() = default;
+
+Cell::Cell(const Cell &) = default;

@@ -14,10 +14,6 @@ int main()
     Snake   snake(N, P);
 
     while (true) {
-        {
-            int n, p;
-            cin >> n >> p; cin.ignore();
-        }
         for (int i = 0; i < N; i++) {
             int X0, Y0, X1, Y1;
             cin >> X0 >> Y0 >> X1 >> Y1; cin.ignore();
@@ -27,5 +23,9 @@ int main()
         // Write an action using cout. DON'T FORGET THE "<< endl"
         // To debug: cerr << "Debug messages..." << endl"
         snake.takeDecision();
+        {
+            int n, p;
+            cin >> n >> p; cin.ignore();
+        }
     }
 }

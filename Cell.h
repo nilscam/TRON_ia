@@ -8,7 +8,7 @@
 class Cell {
 public:
     Cell();
-    Cell(Cell const &) = default;
+    Cell(const Cell &);
     ~Cell();
 
     int id;

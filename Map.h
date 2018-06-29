@@ -6,6 +6,8 @@
 #define TEST_MAP_H
 
 #include <vector>
+#include <iostream>
+#include <ostream>
 #include "Cell.h"
 
 #define MAPY 20
@@ -13,6 +15,9 @@
 
 class Head {
 public:
+    Head() = default;
+    ~Head() = default;
+
     int id;
     int x;
     int y;
@@ -21,18 +26,22 @@ public:
 class Map {
 public:
     Map();
-    Map(Map const &) = default;
+    Map(const Map &);
     ~Map() = default;
+
 
     void    createMap();
     void    removeDeadPlayers(int);
     void    addMove(int, int, int);
 
-    void    propagation(std::vector<Head>);
+    void    propagation(std::vector<Head> &);
     int     getScore(int);
 
     std::vector<std::vector<Cell>>  map;
     int scores[4] = {0, 0, 0, 0};
 };
+
+std::ostream& operator<<(std::ostream &, const Map &);
+
 
 #endif //TEST_MAP_H

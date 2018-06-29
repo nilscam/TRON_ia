@@ -8,7 +8,7 @@
 class Cell {
 public:
     Cell();
-    Cell(Cell const &) = default;
+    Cell(const Cell &);
     ~Cell();
 
     int id;
@@ -23,7 +23,10 @@ public:
 
 Cell::Cell() = default;
 
-Cell::~Cell() = default;//
+Cell::~Cell() = default;
+
+Cell::Cell(const Cell &) = default;
+//
 // Created by nils on 27/06/18.
 //
 
@@ -31,12 +34,17 @@ Cell::~Cell() = default;//
 #define TEST_MAP_H
 
 #include <vector>
+#include <iostream>
+#include <ostream>
 
 #define MAPY 20
 #define MAPX 30
 
 class Head {
 public:
+    Head() = default;
+    ~Head() = default;
+
     int id;
     int x;
     int y;
@@ -45,19 +53,23 @@ public:
 class Map {
 public:
     Map();
-    Map(Map const &) = default;
+    Map(const Map &);
     ~Map() = default;
+
 
     void    createMap();
     void    removeDeadPlayers(int);
     void    addMove(int, int, int);
 
-    void    propagation(std::vector<Head>);
+    void    propagation(std::vector<Head> &);
     int     getScore(int);
 
     std::vector<std::vector<Cell>>  map;
     int scores[4] = {0, 0, 0, 0};
 };
+
+std::ostream& operator<<(std::ostream &, const Map &);
+
 
 #endif //TEST_MAP_H
 //
@@ -69,7 +81,35 @@ Map::Map() {
     createMap();
 }
 
+Map::Map(const Map &copy) {
+    map.reserve(20);
+    for (int y = 0; y < MAPY; y++) {
+        std::vector<Cell> row(30);
+        for (int x = 0; x < MAPX; x++) {
+            row[x] = Cell();
+            row[x].id = copy.map[y][x].id;
+            row[x].used = copy.map[y][x].used;
+        }
+        map[y] = row;
+    }
+}
+
+std::ostream &operator<<(std::ostream &out, const Map &toDisplay) {
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 30; x++) {
+            if (toDisplay.map[y][x].used) {
+                out << toDisplay.map[y][x].id;
+            } else {
+                out << " ";
+            }
+        }
+        out << std::endl;
+    }
+    return out;
+}
+
 void Map::createMap() {
+    std::cerr << "map Create" << std::endl;
     map.reserve(20);
     for (int y = 0; y < 20; y++) {
         std::vector<Cell> row(30);
@@ -78,6 +118,7 @@ void Map::createMap() {
         }
         map[y] = row;
     }
+    std::cerr << "Success" << std::endl;
 }
 
 void    Map::removeDeadPlayers(int id) {
@@ -102,13 +143,12 @@ void    Map::addMove(int id, int x, int y) {
             scores[head.id] += 1;   \
         }})
 
-void    Map::propagation(std::vector<Head> heads) {
+void    Map::propagation(std::vector<Head> &heads) {
     bool    mapIsFilled = false;
 
     while (!mapIsFilled) {
 
         std::vector<Head>   nextHeads;
-        nextHeads.reserve(heads.size() * 4);
 
         for (auto head : heads) {
             TRY_PROP(head.x + 1, head.y); // RIGHT
@@ -119,6 +159,10 @@ void    Map::propagation(std::vector<Head> heads) {
 
         if (nextHeads.empty())
             mapIsFilled = true;
+        else {
+            heads = nextHeads;
+            nextHeads.shrink_to_fit();
+        }
     }
 }
 
@@ -180,6 +224,7 @@ std::vector<Head> Snake::headSort(std::vector<Head> const &oldheads, int idFirst
     unsigned long   size = oldheads.size();
     std::vector<Head>   newheads(size);
 
+    std::cerr << size << std::endl;
     newheads.push_back({oldheads[idFirst].id, x, y});
     for (int i = 1; i < size; i++) {
         // on met les têtes dans l'ordre de celle qui joue la première jusqu"à la dernière
@@ -202,22 +247,29 @@ void    Snake::takeDecision() {
     std::string bestDir = "UP";
 
     for (auto dir : directions) {
-        Map test(map);
+            std::cerr << "loop" << std::endl;
+            Map test = map;
 
-        int x = heads[id].x + dir.second.first;
-        int y = heads[id].y + dir.second.second;
+            int x = heads[id].x + dir.second.first;
+            int y = heads[id].y + dir.second.second;
 
-        std::vector<Head>   h = headSort(heads, id, x, y);
-        test.addMove(id, x, y);
+            std::vector<Head>   h = headSort(heads, id, x, y);
 
-        test.propagation(h);
 
-        if (test.getScore(id) > maxScore) {
-            maxScore = test.getScore(id);
-            bestDir = dir.first;
-        }
+            /*
+            test.addMove(id, x, y);
+
+
+            test.propagation(h);
+
+            if (test.getScore(id) > maxScore) {
+                maxScore = test.getScore(id);
+                bestDir = dir.first;
+            }
+            */
     }
     std::cout << bestDir << std::endl;
+    heads.clear();
 }
 #include <iostream>
 #include <string>
@@ -234,10 +286,6 @@ int main()
     Snake   snake(N, P);
 
     while (true) {
-        {
-            int n, p;
-            cin >> n >> p; cin.ignore();
-        }
         for (int i = 0; i < N; i++) {
             int X0, Y0, X1, Y1;
             cin >> X0 >> Y0 >> X1 >> Y1; cin.ignore();
@@ -247,5 +295,9 @@ int main()
         // Write an action using cout. DON'T FORGET THE "<< endl"
         // To debug: cerr << "Debug messages..." << endl"
         snake.takeDecision();
+        {
+            int n, p;
+            cin >> n >> p; cin.ignore();
+        }
     }
 }
