@@ -33,3 +33,29 @@ void    Map::addMove(int id, int x, int y) {
     map[y][x].used = true;
     map[y][x].id = id;
 }
+
+#define TRY_PROP(x, y) ({ if ((x) >= 0 && (y) >= 0 && x < MAPX && y < MAPY && !map[y][x].used) {    \
+            map[y][x].used = true; \
+            map[y][x].id = head.id; \
+            nextHeads.push_back({head.id, x, y});   \
+        }})
+
+void    Map::propagation(std::vector<Head> heads) {
+    bool    mapIsFilled = false;
+
+    while (!mapIsFilled) {
+
+        std::vector<Head>   nextHeads;
+        nextHeads.reserve(heads.size() * 4);
+
+        for (auto head : heads) {
+            TRY_PROP(head.x + 1, head.y); // RIGHT
+            TRY_PROP(head.x - 1, head.y); // LEFT
+            TRY_PROP(head.x, head.y - 1); // UP
+            TRY_PROP(head.x, head.y + 1); // DOWN
+        }
+        if (nextHeads.empty())
+            mapIsFilled = true;
+    }
+}
+

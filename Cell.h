@@ -8,11 +8,12 @@
 class Cell {
 public:
     Cell();
+    Cell(Cell const &) = default;
     ~Cell();
 
     int id;
     bool used = false;
-    int tmp_id;
+    int fill_id;
 };
 
 #endif //TEST_CELL_H
