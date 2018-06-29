@@ -43,27 +43,42 @@ void    Snake::takeDecision() {
     int maxScore = 0;
     std::string bestDir = "UP";
 
+    Map t;
+    Map lotm;
+    Map foty;
+    Map cotb;
+    Map tozer;
+    Map taza;
+
     for (auto dir : directions) {
-            std::cerr << "loop" << std::endl;
-            Map test = map;
+        std::cerr << "loop" << std::endl;
 
-            int x = heads[id].x + dir.second.first;
-            int y = heads[id].y + dir.second.second;
+        Map toto;
+        Map totm;
+        Map toty;
+        Map totb;
+        Map totv;
+        Map tota;
 
-            std::vector<Head>   h = headSort(heads, id, x, y);
+        /*
+        int x = heads[id].x + dir.second.first;
+        int y = heads[id].y + dir.second.second;
+
+        std::vector<Head> h = headSort(heads, id, x, y);
+
+         */
+
+        /*
+        test.addMove(id, x, y);
 
 
-            /*
-            test.addMove(id, x, y);
+        test.propagation(h);
 
-
-            test.propagation(h);
-
-            if (test.getScore(id) > maxScore) {
-                maxScore = test.getScore(id);
-                bestDir = dir.first;
-            }
-            */
+        if (test.getScore(id) > maxScore) {
+            maxScore = test.getScore(id);
+            bestDir = dir.first;
+        }
+        */
     }
     std::cout << bestDir << std::endl;
     heads.clear();

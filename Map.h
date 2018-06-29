@@ -29,7 +29,7 @@ public:
     Map(const Map &);
     ~Map() = default;
 
-
+    void    copy(const Map &);
     void    createMap();
     void    removeDeadPlayers(int);
     void    addMove(int, int, int);

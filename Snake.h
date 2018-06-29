@@ -21,9 +21,6 @@ public:
 
     void    takeDecision();
 
-
-private:
-
     Map map;
     int id;
     int nb_players;

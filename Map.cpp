@@ -96,3 +96,12 @@ void    Map::propagation(std::vector<Head> &heads) {
 int     Map::getScore(int id) {
     return scores[id];
 }
+
+void    Map::copy(const Map &copy) {
+    for (int y = 0; y < MAPY; y++) {
+        for (int x = 0; x < MAPX; x++) {
+            map[y][x].id = copy.map[y][x].id;
+            map[y][x].used = copy.map[y][x].used;
+        }
+    }
+}

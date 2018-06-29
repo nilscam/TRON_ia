@@ -56,7 +56,7 @@ public:
     Map(const Map &);
     ~Map() = default;
 
-
+    void    copy(const Map &);
     void    createMap();
     void    removeDeadPlayers(int);
     void    addMove(int, int, int);
@@ -169,6 +169,15 @@ void    Map::propagation(std::vector<Head> &heads) {
 int     Map::getScore(int id) {
     return scores[id];
 }
+
+void    Map::copy(const Map &copy) {
+    for (int y = 0; y < MAPY; y++) {
+        for (int x = 0; x < MAPX; x++) {
+            map[y][x].id = copy.map[y][x].id;
+            map[y][x].used = copy.map[y][x].used;
+        }
+    }
+}
 //
 // Created by nils on 27/06/18.
 //
@@ -190,9 +199,6 @@ public:
     std::vector<Head>   headSort(std::vector<Head> const &, int, int, int);
 
     void    takeDecision();
-
-
-private:
 
     Map map;
     int id;
@@ -246,27 +252,43 @@ void    Snake::takeDecision() {
     int maxScore = 0;
     std::string bestDir = "UP";
 
+    Map t;
+    Map lotm;
+    Map foty;
+    Map cotb;
+    Map tozer;
+    Map taza;
+
     for (auto dir : directions) {
-            std::cerr << "loop" << std::endl;
-            Map test = map;
+        std::cerr << "loop" << std::endl;
+        std::cerr << dir.first << std::endl;
 
-            int x = heads[id].x + dir.second.first;
-            int y = heads[id].y + dir.second.second;
+        Map toto;
+        Map totm;
+        Map toty;
+        Map totb;
+        Map totv;
+        Map tota;
 
-            std::vector<Head>   h = headSort(heads, id, x, y);
+        /*
+        int x = heads[id].x + dir.second.first;
+        int y = heads[id].y + dir.second.second;
+
+        std::vector<Head> h = headSort(heads, id, x, y);
+
+         */
+
+        /*
+        test.addMove(id, x, y);
 
 
-            /*
-            test.addMove(id, x, y);
+        test.propagation(h);
 
-
-            test.propagation(h);
-
-            if (test.getScore(id) > maxScore) {
-                maxScore = test.getScore(id);
-                bestDir = dir.first;
-            }
-            */
+        if (test.getScore(id) > maxScore) {
+            maxScore = test.getScore(id);
+            bestDir = dir.first;
+        }
+        */
     }
     std::cout << bestDir << std::endl;
     heads.clear();
@@ -276,19 +298,26 @@ void    Snake::takeDecision() {
 #include <vector>
 #include <algorithm>
 
-using namespace std;
-
 int main()
 {
     int N; // total number of players (2 to 4).
     int P; // your player number (0 to 3).
-    cin >> N >> P; cin.ignore();
+    std::cin >> N >> P; std::cin.ignore();
     Snake   snake(N, P);
+
+    Map tata;
+    Map tatn;
+    Map tati;
+    Map tatu;
+    Map taty;
+    Map tatt;
+
+    std::cerr << "go" << std::endl;
 
     while (true) {
         for (int i = 0; i < N; i++) {
             int X0, Y0, X1, Y1;
-            cin >> X0 >> Y0 >> X1 >> Y1; cin.ignore();
+            std::cin >> X0 >> Y0 >> X1 >> Y1; std::cin.ignore();
             snake.addHead(X0, Y0, X1, Y1, i);
         }
 
@@ -297,7 +326,7 @@ int main()
         snake.takeDecision();
         {
             int n, p;
-            cin >> n >> p; cin.ignore();
+            std::cin >> n >> p; std::cin.ignore();
         }
     }
 }
